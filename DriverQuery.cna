@@ -1,0 +1,41 @@
+# DriverQuery.cna
+# BOF: Enumerate system drivers via WMI
+# Usage: driverquery
+
+# Register both lowercase and capitalized variants
+beacon_command_register(
+    "driverquery",
+    "Enumerate system drivers via WMI (BOF).",
+    "INFO:\nEnumerates system drivers using a Beacon Object File (BOF) that queries WMI (ROOT\\CIMV2 -> Win32_SystemDriver).\n\n" .
+    "USAGE:\ndriverquery\n\n" .
+    "EXAMPLES:\ndriverquery\nDriverQuery\n\n"
+);
+
+beacon_command_register(
+    "DriverQuery",
+    "Enumerate system drivers via WMI (BOF).",
+    "INFO:\nAlias of 'driverquery'. Performs the same enumeration via WMI.\n\n" .
+    "USAGE:\nDriverQuery\n\n" .
+    "EXAMPLES:\nDriverQuery\ndriverquery\n\n"
+);
+
+# Shared alias logic
+alias driverquery {
+    $bid = $1;
+
+    # Load BOF object
+    $handle = openf(script_resource("DriverQuery.o"));
+    $data = readb($handle, -1);
+    closef($handle);
+
+    # No arguments needed
+    $arg_data = bof_pack($bid, "");
+
+    btask($bid, "Running DriverQuery BOF...");
+    beacon_inline_execute($1, $data, "go", $arg_data);
+}
+
+# Make the capitalized command call the same alias
+alias DriverQuery {
+    fireAlias($1, "driverquery");
+}
