@@ -12,7 +12,7 @@ Results are displayed in a structured table format for readability and batch out
 
 
 ## Disclaimer
-This project was trown together to quickly enumerate system drivers in a post-exploitation context.  
+This project was thrown together to quickly enumerate system drivers in a post-exploitation context.  
 It is provided **as-is**, without warranty or guarantee of correctness or completeness.
 
 > Use at your own risk and with needed permissions.
